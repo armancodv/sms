@@ -187,17 +187,26 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
         $scope.db.select("users", {"group_id": group_id}).then(function (results) {
             $scope.group_users = [];
             for (i = 0; i < results.rows.length; i++) {
-                sendSMS(results.rows.item(i).phone, message, successCallback, failureCallback);
+                $scope.send_sms(results.rows.item(i).phone, message);
             }
         })
     };
 
     $scope.send_sms = function (number, message) {
-        SMS.sendSMS(number, message, function (res) {
-            
-        }, function (err) {
-            
-        });
+        console.log("number=" + number + ", message= " + message);
+        var options = {
+            replaceLineBreaks: false,
+            android: {
+                intent: 'INTENT'
+            }
+        };
+        var success = function () {
+            alert('Message sent successfully');
+        };
+        var error = function (e) {
+            alert('Message Failed:' + e);
+        };
+        sms.send(number, message, options, success, error);
     };
 
     $scope.db = $webSql.openDatabase('mydb', '1.0', 'sms', 20 * 1024 * 1024);
