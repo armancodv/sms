@@ -14,6 +14,7 @@
     <gap:plugin name="cordova-plugin-splashscreen" source="npm"/>
     <gap:plugin name="cordova-plugin-statusbar" source="npm"/>
     <gap:plugin name="cordova-plugin-x-socialsharing" source="npm"/>
+    <gap:plugin name="cordova-plugin-sms" source="npm"/>
     <icon src="res/icon/icon.png"/>
     <icon src="res/icon/icon-36-ldpi.png" gap:platform="android" gap:qualifier="ldpi"/>
     <icon src="res/icon/icon-48-mdpi.png" gap:platform="android" gap:qualifier="mdpi"/>

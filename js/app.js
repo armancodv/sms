@@ -10,6 +10,11 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
         $rootScope.loading = false;
     });
 
+    $scope.drop_tables = function () {
+        $scope.db.dropTable('users');
+        $scope.db.dropTable('groups');
+    };
+
     $scope.create_tables = function () {
         $scope.db.createTable('users', {
             "id": {
@@ -131,6 +136,8 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
     $scope.delete_status = function () {
         $scope.insert_user_status = false;
         $scope.insert_group_status = false;
+        $scope.insert_restore_status = false;
+        $scope.insert_message_status = false;
     };
 
     $scope.backup_sql = function () {
@@ -151,7 +158,42 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
         });
     };
 
-    $scope.restore_sql = function () {
+    $scope.restore_sql = function (restore) {
+        try {
+            restore = JSON.parse(restore);
+            $scope.drop_tables();
+            $scope.create_tables();
+            restore.users.forEach(function (element) {
+                $scope.db.insert('users', {
+                    "id": element.id,
+                    "group_id": element.group_id,
+                    "name": element.name,
+                    "phone": element.phone
+                }).then(function (results) {
+                });
+            });
+            restore.groups.forEach(function (element) {
+                $scope.db.insert('groups', {"id": element.id, "name": element.name}).then(function (results) {
+                });
+            });
+            $scope.insert_restore_status = true;
+        }
+        catch (e) {
+            $scope.insert_restore_status = false;
+        }
+    };
+
+    $scope.send_sms_to_group = function (group_id, message) {
+        $scope.db.select("users", {"group_id": group_id}).then(function (results) {
+            $scope.group_users = [];
+            for (i = 0; i < results.rows.length; i++) {
+                sendSMS(results.rows.item(i).phone, message, successCallback, failureCallback);
+            }
+        })
+    };
+
+    $scope.send_sms = function (number, message) {
+        sendSMS(number, message, successCallback, failureCallback);
     };
 
     $scope.db = $webSql.openDatabase('mydb', '1.0', 'sms', 20 * 1024 * 1024);

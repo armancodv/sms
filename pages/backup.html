@@ -3,8 +3,18 @@
 </div>
 <div class="scrollable">
     <div class="scrollable-content section">
-        <a class="btn btn-primary btn-block" ng-click="backup_sql()"><i class="fa fa-download"></i> پشتیبان گیری</a>
-        <textarea ng-model="return"></textarea>
-        <textarea ng-model="alert"></textarea>
+        <form role="form" ng-submit="backup_sql()">
+            <fieldset>
+                <legend>پشتیبان گیری</legend>
+                <div class="form-group">
+                    <textarea ng-model="return" class="form-control" rows="5"></textarea>
+                </div>
+            </fieldset>
+            <hr>
+            <button class="btn btn-primary btn-block"><i class="fa fa-download"></i> پشتیبان گیری</button>
+            <div ui-content-for="navbarAction">
+                <a class="btn" ng-click="backup_sql()"><i class="fa fa-download"></i> پشتیبان گیری</a>
+            </div>
+        </form>
     </div>
 </div>

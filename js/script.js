@@ -19,6 +19,7 @@ app.config(function ($routeProvider) {
     $routeProvider.when('/user/:user_id', {templateUrl: 'pages/user.html', reloadOnSearch: false});
     $routeProvider.when('/group/:group_id', {templateUrl: 'pages/group.html', reloadOnSearch: false});
     $routeProvider.when('/backup', {templateUrl: 'pages/backup.html', reloadOnSearch: false});
+    $routeProvider.when('/restore', {templateUrl: 'pages/restore.html', reloadOnSearch: false});
 });
 
 app.directive('toucharea', ['$touch', function ($touch) {
