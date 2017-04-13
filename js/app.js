@@ -197,7 +197,7 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
         var options = {
             replaceLineBreaks: false,
             android: {
-                intent: 'INTENT'
+                intent: ''
             }
         };
         var success = function () {
