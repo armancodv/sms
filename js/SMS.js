@@ -1,86 +1,55 @@
+'use strict';
 
-var argscheck = require('cordova/argscheck'),
-    exec = require('cordova/exec');
+var exec = require('cordova/exec');
 
-var safesmsExport = {};
+var sms = {};
 
-/*
- * Methods
- */
+function convertPhoneToArray(phone) {
+    if (typeof phone === 'string' && phone.indexOf(',') !== -1) {
+        phone = phone.split(',');
+    }
+    if (Object.prototype.toString.call(phone) !== '[object Array]') {
+        phone = [phone];
+    }
+    return phone;
+}
 
-/*
- * set options:
- *  {
- *    position: integer, // default position
- *    x: integer,	// default X of banner
- *    y: integer,	// default Y of banner
- *    isTesting: boolean,	// if set to true, to receive test ads
- *    autoShow: boolean,	// if set to true, no need call showBanner or showInterstitial
- *   }
- */
-safesmsExport.setOptions = function(options, successCallback, failureCallback) {
-	  if(typeof options === 'object') {
-		  cordova.exec( successCallback, failureCallback, 'SMS', 'setOptions', [options] );
-	  } else {
-		  if(typeof failureCallback === 'function') {
-			  failureCallback('options should be specified.');
-		  }
-	  }
-	};
 
-safesmsExport.startWatch = function(successCallback, failureCallback) {
-	cordova.exec( successCallback, failureCallback, 'SMS', 'startWatch', [] );
+sms.send = function(phone, message, options, success, failure) {
+    // parsing phone numbers
+    phone = convertPhoneToArray(phone);
+
+    // parsing options
+    var replaceLineBreaks = false;
+    var androidIntent = '';
+    if (typeof options === 'string') { // ensuring backward compatibility
+        window.console.warn('[DEPRECATED] Passing a string as a third argument is deprecated. Please refer to the documentation to pass the right parameter: https://github.com/cordova-sms/cordova-sms-plugin.');
+        androidIntent = options;
+    }
+    else if (typeof options === 'object') {
+        replaceLineBreaks = options.replaceLineBreaks || false;
+        if (options.android && typeof options.android === 'object') {
+            androidIntent = options.android.intent;
+        }
+    }
+
+    // fire
+    exec(
+        success,
+        failure,
+        'Sms',
+        'send', [phone, message, androidIntent, replaceLineBreaks]
+    );
 };
 
-safesmsExport.stopWatch = function(successCallback, failureCallback) {
-	cordova.exec( successCallback, failureCallback, 'SMS', 'stopWatch', [] );
+sms.hasPermission = function(success, failure) {
+    // fire
+    exec(
+        success,
+        failure,
+        'Sms',
+        'has_permission', []
+    );
 };
 
-safesmsExport.enableIntercept = function(on_off, successCallback, failureCallback) {
-	on_off = !! on_off;
-	cordova.exec( successCallback, failureCallback, 'SMS', 'enableIntercept', [ on_off ] );
-};
-
-safesmsExport.sendSMS = function(address, text, successCallback, failureCallback) {
-	var numbers;
-	if( Object.prototype.toString.call( address ) === '[object Array]' ) {
-		numbers = address;
-	} else if(typeof address === 'string') {
-		numbers = [ address ];
-	} else {
-		if(typeof failureCallback === 'function') {
-			failureCallback("require address, phone number as string, or array of string");
-		}
-		return;
-	}
-	
-	cordova.exec( successCallback, failureCallback, 'SMS', 'sendSMS', [ numbers, text ] );
-};
-
-safesmsExport.listSMS = function(filter, successCallback, failureCallback) {
-	cordova.exec( successCallback, failureCallback, 'SMS', 'listSMS', [ filter ] );
-};
-
-safesmsExport.deleteSMS = function(filter, successCallback, failureCallback) {
-	cordova.exec( successCallback, failureCallback, 'SMS', 'deleteSMS', [ filter ] );
-};
-
-safesmsExport.restoreSMS = function(msg, successCallback, failureCallback) {
-	var smsList = [];
-	if(Array.isArray(msg)) {
-		if(msg.length > 0) smsList = msg;
-	} else if(typeof msg === 'object') {
-		if(msg !== null) smsList = [ msg ];
-	}
-	cordova.exec( successCallback, failureCallback, 'SMS', 'restoreSMS', [ msg ] );
-};
-
-/*
- * Events:
- * 
- * document.addEventListener('onSMSArrive', function(e) { var sms = e.data; }
- * 
- */
-
-module.exports = safesmsExport;
-
+module.exports = sms;
