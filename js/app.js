@@ -146,54 +146,12 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
                     $scope.return.groups.push(results.rows.item(i));
                 }
                 $scope.return = JSON.stringify($scope.return);
-                $scope.alert = 'start';
-                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
-                    $scope.alert += 'file system open: ' + fs.name;
-                    fs.root.getFile("newPersistentFile.txt", {create: true, exclusive: false}, function (fileEntry) {
-                        $scope.alert += "fileEntry is file?" + fileEntry.isFile.toString();
-                        $scope.writeFile(fileEntry, null);
-                    }, $scope.onErrorCreateFile);
-                }, $scope.onErrorLoadFs);
+                window.plugins.socialsharing.share($scope.return);
             });
         });
     };
 
     $scope.restore_sql = function () {
-    };
-
-    $scope.writeFile = function (fileEntry, dataObj) {
-        fileEntry.createWriter(function (fileWriter) {
-            fileWriter.onwriteend = function () {
-                $scope.alert += "Successful file write...";
-                readFile(fileEntry);
-            };
-            fileWriter.onerror = function (e) {
-                $scope.alert += "Failed file write: " + e.toString();
-            };
-            if (!dataObj) {
-                dataObj = new Blob(['some file data'], {type: 'text/plain'});
-            }
-            fileWriter.write(dataObj);
-        });
-    };
-
-    $scope.readFile = function (fileEntry) {
-        fileEntry.file(function (file) {
-            var reader = new FileReader();
-            reader.onloadend = function () {
-                $scope.alert += "Successful file read: " + this.result;
-                displayFileData(fileEntry.fullPath + ": " + this.result);
-            };
-            reader.readAsText(file);
-        }, onErrorReadFile);
-    };
-
-    $scope.onErrorCreateFile = function () {
-        $scope.alert += 'error1';
-    };
-
-    $scope.onErrorLoadFs = function () {
-        $scope.alert += 'error2';
     };
 
     $scope.db = $webSql.openDatabase('mydb', '1.0', 'sms', 20 * 1024 * 1024);

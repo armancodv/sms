@@ -11,15 +11,9 @@
     <preference name="fullscreen" value="false"/>
     <preference name="android-minSdkVersion" value="9"/>
     <preference name="android-installLocation" value="auto"/>
-    <gap:plugin name="cordova-plugin-whitelist" source="npm"/>
     <gap:plugin name="cordova-plugin-splashscreen" source="npm"/>
     <gap:plugin name="cordova-plugin-statusbar" source="npm"/>
-    <gap:plugin name="cordova-plugin-inappbrowser" source="npm"/>
-    <gap:plugin name="cordova-plugin-file" source="npm"/>
-    <allow-navigation href="http://api.offgard.com/*"/>
-    <allow-intent href="http://api.offgard.com/*"/>
-    <access origin="http://api.offgard.com"/>
-    <access origin="*"/>
+    <gap:plugin name="cordova-plugin-x-socialsharing" source="npm"/>
     <icon src="res/icon/icon.png"/>
     <icon src="res/icon/icon-36-ldpi.png" gap:platform="android" gap:qualifier="ldpi"/>
     <icon src="res/icon/icon-48-mdpi.png" gap:platform="android" gap:qualifier="mdpi"/>
@@ -33,8 +27,4 @@
     <preference name="SplashScreenDelay" value="5000"/>
     <preference name="SplashMaintainAspectRatio" value="true"/>
     <splash src="res/screen/screen.png"/>
-    <gap:config-file platform="android" parent="/manifest" mode="add">
-        <uses-permission android:name="cordova.file.applicationStorageDirectory"/>
-        <uses-permission android:name="cordova.file.externalApplicationStorageDirectory"/>
-    </gap:config-file>
 </widget>
