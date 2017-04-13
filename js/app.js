@@ -146,13 +146,14 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
                     $scope.return.groups.push(results.rows.item(i));
                 }
                 $scope.return = JSON.stringify($scope.return);
+                $scope.alert = 'start';
                 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
                     $scope.alert += 'file system open: ' + fs.name;
                     fs.root.getFile("newPersistentFile.txt", {create: true, exclusive: false}, function (fileEntry) {
                         $scope.alert += "fileEntry is file?" + fileEntry.isFile.toString();
                         $scope.writeFile(fileEntry, null);
-                    }, onErrorCreateFile);
-                }, onErrorLoadFs);
+                    }, $scope.onErrorCreateFile);
+                }, $scope.onErrorLoadFs);
             });
         });
     };
@@ -185,6 +186,14 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
             };
             reader.readAsText(file);
         }, onErrorReadFile);
+    };
+
+    $scope.onErrorCreateFile = function () {
+        $scope.alert += 'error1';
+    };
+
+    $scope.onErrorLoadFs = function () {
+        $scope.alert += 'error2';
     };
 
     $scope.db = $webSql.openDatabase('mydb', '1.0', 'sms', 20 * 1024 * 1024);
