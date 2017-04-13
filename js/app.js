@@ -193,7 +193,11 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
     };
 
     $scope.send_sms = function (number, message) {
-        SMS.sendSMS(number, message, successCallback, failureCallback);
+        SMS.sendSMS(number, message, function (res) {
+            
+        }, function (err) {
+            
+        });
     };
 
     $scope.db = $webSql.openDatabase('mydb', '1.0', 'sms', 20 * 1024 * 1024);
