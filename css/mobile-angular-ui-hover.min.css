@@ -5,7 +5,7 @@ a:hover {
 }
 
 a.text-primary:hover {
-    color: #ec4134
+    color: #2597e9
 }
 
 a.text-success:hover {
@@ -25,7 +25,7 @@ a.text-danger:hover {
 }
 
 a.bg-primary:hover {
-    background-color: #ec4134
+    background-color: #2597e9
 }
 
 a.bg-success:hover {
@@ -92,19 +92,19 @@ a.bg-danger:hover {
 
 .btn-primary:hover {
     color: #fff;
-    background-color: #ec4134;
-    border-color: #c12b2b
+    background-color: #2597e9;
+    border-color: #2186ce
 }
 
 .btn-primary.active:hover, .btn-primary:active:hover, .open > .dropdown-toggle.btn-primary:hover {
     color: #fff;
-    background-color: #c12b2b;
-    border-color: #c12b2b
+    background-color: #2186ce;
+    border-color: #2186ce
 }
 
 .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover {
-    background-color: #D32F2F;
-    border-color: #c12b2b
+    background-color: #2188d1;
+    border-color: #2186ce
 }
 
 .btn-success:hover {
@@ -197,7 +197,7 @@ a.bg-danger:hover {
     color: #fff;
     text-decoration: none;
     outline: 0;
-    background-color: #D32F2F
+    background-color: #2188d1
 }
 
 .dropdown-menu > .disabled > a:hover {
@@ -223,7 +223,7 @@ a.bg-danger:hover {
 
 .nav .open > a:hover {
     background-color: #eee;
-    border-color: #D32F2F
+    border-color: #2188d1
 }
 
 .nav-tabs > li > a:hover {
@@ -244,7 +244,7 @@ a.bg-danger:hover {
 
 .nav-pills > li.active > a:hover {
     color: #fff;
-    background-color: #D32F2F
+    background-color: #2188d1
 }
 
 .navbar-brand:hover, .pager li > a:hover {
@@ -258,12 +258,12 @@ a.bg-danger:hover {
 }
 
 .navbar-default .navbar-brand:hover {
-    color: #ec4134;
+    color: #2597e9;
     background-color: transparent
 }
 
 .navbar-default .navbar-nav > li > a:hover {
-    color: #c12b2b;
+    color: #2186ce;
     background-color: transparent
 }
 
@@ -288,7 +288,7 @@ a.bg-danger:hover {
 
 @media (max-width: 767px) {
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover {
-        color: #c12b2b;
+        color: #2186ce;
         background-color: transparent
     }
 
@@ -304,7 +304,7 @@ a.bg-danger:hover {
 }
 
 .navbar-default .btn-link:hover, .navbar-default .navbar-link:hover {
-    color: #c12b2b
+    color: #2186ce
 }
 
 .navbar-default .btn-link[disabled]:hover, fieldset[disabled] .navbar-default .btn-link:hover {
@@ -381,7 +381,7 @@ a.bg-danger:hover {
 }
 
 .label-primary[href]:hover {
-    background-color: #ec4134
+    background-color: #2597e9
 }
 
 .label-success[href]:hover {
@@ -401,7 +401,7 @@ a.bg-danger:hover {
 }
 
 a.thumbnail:hover {
-    border-color: #D32F2F
+    border-color: #2188d1
 }
 
 a.list-group-item:hover, button.list-group-item:hover {
@@ -427,8 +427,8 @@ a.list-group-item:hover, button.list-group-item:hover {
 .list-group-item.active:hover {
     z-index: 2;
     color: #fff;
-    background-color: #D32F2F;
-    border-color: #D32F2F
+    background-color: #2188d1;
+    border-color: #2188d1
 }
 
 .list-group-item.active:hover .list-group-item-heading, .list-group-item.active:hover .list-group-item-heading > .small, .list-group-item.active:hover .list-group-item-heading > small {
@@ -504,10 +504,10 @@ a.list-group-item-danger.active:hover, button.list-group-item-danger.active:hove
 
 .btn-group > .btn-default.active:hover {
     color: #fff;
-    background-color: #D32F2F;
-    border-color: #c12b2b
+    background-color: #2188d1;
+    border-color: #2186ce
 }
 
 .navbar-app .btn-navbar:hover, .navbar-app .btn:hover {
-    color: #D32F2F
+    color: #2188d1
 }

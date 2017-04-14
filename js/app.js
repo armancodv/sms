@@ -50,16 +50,23 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
     };
 
     $scope.insert_user = function (group_id, name, phone) {
-        $scope.db.insert('users', {"group_id": group_id, "name": name, "phone": phone}).then(function (results) {
-            $scope.insert_user_status = true;
-        });
+        if (group_id) {
+            $scope.db.insert('users', {"group_id": group_id, "name": name, "phone": phone}).then(function (results) {
+                $scope.insert_user_status = true;
+            });
+        }
     };
 
     $scope.delete_user = function (id) {
         $scope.db.del('users', {"id": id}).then(function (results) {
             $scope.delete_user_status = true;
             $scope.select_users();
+            $scope.select_group_users($routeParams.group_id);
         });
+    };
+
+    $scope.delete_user_by_param = function () {
+        $scope.delete_user($routeParams.user_id);
     };
 
     $scope.select_users = function () {
@@ -184,12 +191,18 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
     };
 
     $scope.send_sms_to_group = function (group_id, message) {
-        $scope.db.select("users", {"group_id": group_id}).then(function (results) {
-            $scope.group_users = [];
-            for (i = 0; i < results.rows.length; i++) {
-                $scope.send_sms(results.rows.item(i).phone, message);
-            }
-        })
+        $scope.number_message_sent = 0;
+        $scope.number_message_not_sent = 0;
+        if (group_id) {
+
+            $scope.db.select("users", {"group_id": group_id}).then(function (results) {
+                $scope.group_users = [];
+                for (i = 0; i < results.rows.length; i++) {
+                    $scope.send_sms(results.rows.item(i).phone, message);
+                }
+            });
+            $scope.insert_message_status = true;
+        }
     };
 
     $scope.send_sms = function (number, message) {
@@ -201,10 +214,10 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
             }
         };
         var success = function () {
-            alert('Message sent successfully');
+            $scope.number_message_sent++;
         };
         var error = function (e) {
-            alert('Message Failed:' + e);
+            $scope.number_message_not_sent++;
         };
         sms.send(number, message, options, success, error);
     };

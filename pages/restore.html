@@ -1,13 +1,16 @@
 <div ui-content-for="title" ng-init="delete_status()">
-    <span>بازیابی</span>
+    <span>ورودی داده ها</span>
 </div>
 <div class="scrollable">
     <div class="scrollable-content section">
         <form role="form" ng-submit="restore_sql(restore)">
             <fieldset>
-                <legend>بازیابی</legend>
+                <legend>ورودی داده ها</legend>
+                <div ng-if="insert_restore_status" class="alert alert-success">اطلاعات بروز شد.</div>
+                <div class="alert alert-info">لطفا قبل از بازیابی از اطلاعات، پشتیبان تهیه نمایید.</div>
+                <div class="alert alert-info">اطلاعات ارسالی را در فیلد زیر وارد نمایید سپس بر روی بازیابی کلیک نمایید.</div>
                 <div class="form-group">
-                    <textarea ng-model="restore" class="form-control" rows="5"></textarea>
+                    <textarea ng-model="restore" class="form-control" rows="5" dir="ltr" placeholder="اطلاعات بازیابی را اینجا وارد نمایید."></textarea>
                 </div>
             </fieldset>
             <hr>
