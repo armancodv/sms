@@ -20,6 +20,10 @@
                               dir="rtl" required></textarea>
                 </div>
             </fieldset>
+            <div class="alert alert-info">
+تعداد کاراکتر: {{message.length}}<br>
+                تعداد پیامک(فارسی):{{sms_counter(message.length)}}
+            </div>
             <hr>
             <button class="btn btn-primary btn-block">ارسال</button>
             <div ui-content-for="navbarAction">

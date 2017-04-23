@@ -222,6 +222,12 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
         sms.send(number, message, options, success, error);
     };
 
+    $scope.sms_counter = function(length) {
+        if(length<=70) return 1;
+        else if(length<=134) return 2;
+        else return Math.ceil((length-134)/67)+2;
+    };
+
     $scope.db = $webSql.openDatabase('mydb', '1.0', 'sms', 20 * 1024 * 1024);
     $scope.create_tables();
 });
