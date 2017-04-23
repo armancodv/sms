@@ -23,7 +23,7 @@
     <icon src="res/icon/icon-144-xxhdpi.png" gap:platform="android" gap:qualifier="xxhdpi"/>
     <icon src="res/icon/icon-192-xxxhdpi.png" gap:platform="android" gap:qualifier="xxxhdpi"/>
     <preference name="StatusBarOverlaysWebView" value="true"/>
-    <preference name="StatusBarBackgroundColor" value="#F44336"/>
+    <preference name="StatusBarBackgroundColor" value="#279ff5"/>
     <preference name="SplashScreen" value="splash"/>
     <preference name="SplashScreenDelay" value="5000"/>
     <preference name="SplashMaintainAspectRatio" value="true"/>
