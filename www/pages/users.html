@@ -1,0 +1,26 @@
+<div ui-content-for="title" ng-init="select_users()">
+    <span>اعضا</span>
+</div>
+
+<div class="scrollable" ui-shared-state="searchBar">
+    <input
+            ng-if="Ui.active('searchBar')"
+            ng-model="$parent.user_search"
+            type="search"
+            class="form-control scrollable-header"
+            placeholder="جستجو"/>
+    <div class="scrollable-content">
+        <div class="list-group">
+            <div ng-repeat="item in users | filter:user_search">
+                <a href="#/user/{{ item.id }}" class="list-group-item"> {{ item.name }} </a>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-block btn-lg btn-primary scrollable-footer" ui-toggle="searchBar">
+        <i class="fa fa-search"></i>
+        <span ui-hide="searchBar">نمایش</span>
+        <span ui-show="searchBar">پنهان کردن</span>
+        جستجو
+    </a>
+</div>

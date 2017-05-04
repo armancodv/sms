@@ -1,0 +1,40 @@
+<div ui-content-for="title" ng-init="select_user_by_param();select_groups()">
+    <span>{{user[0].name}}</span>
+</div>
+<div class="scrollable">
+    <div class="scrollable-content section">
+        <div><b>شمارنده:</b> {{user[0].id}}</div><br>
+        <div><b>نام:</b> {{user[0].name}}</div><br>
+        <div><b>شماره همراه:</b> {{user[0].phone}}</div><br>
+        <hr>
+        <form role="form" ng-submit="changegroup_user(user[0].id,user[0].group_id)">
+            <fieldset>
+                <div class="form-group">
+                    <label>تغییر گروه</label>
+                    <select class="form-control" ng-model="user[0].group_id"
+                            ng-options="item.id as item.name for item in groups" required></select>
+                </div>
+            </fieldset>
+            <button class="btn btn-primary btn-block">تغییر گروه</button>
+            <div ui-content-for="navbarAction">
+                <a class="btn" ng-click="changegroup_user(user[0].id,user[0].group_id)">تغییر گروه</a>
+            </div>
+        </form>
+        <hr>
+        <form role="form" ng-submit="copy_user(user[0].id,user[0].group_id)">
+            <fieldset>
+                <div class="form-group">
+                    <label>کپی به گروه</label>
+                    <select class="form-control" ng-model="user[0].group_id"
+                            ng-options="item.id as item.name for item in groups" required></select>
+                </div>
+            </fieldset>
+            <button class="btn btn-primary btn-block">کپی به گروه</button>
+            <div ui-content-for="navbarAction">
+                <a class="btn" ng-click="copy_user(user[0].id,user[0].group_id)">کپی به گروه</a>
+            </div>
+        </form>
+        <hr>
+        <a class="btn btn-primary btn-block" ng-click="delete_user_by_param()" href="#/users"><i class="fa fa-trash"></i> حذف عضو</a>
+    </div>
+</div>

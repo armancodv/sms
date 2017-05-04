@@ -1,0 +1,18 @@
+<div ui-content-for="title" ng-init="delete_status()">
+    <span>لیست مخاطبان</span>
+</div>
+<div class="scrollable">
+    <div class="scrollable-content section">
+        <form role="form" ng-submit="select_contacts()">
+            <fieldset>
+                <legend>لیست مخاطبان</legend>
+                <div ng-if="contacts_added" class="alert alert-success">اطلاعات دریافت شد.</div>
+                <div ng-if="contacts_loading" class="alert alert-info"><i class="fa fa-refresh fa-spin"></i> در حال دریافت اطلاعات</div>
+            </fieldset>
+            <button class="btn btn-primary btn-block"><i class="fa fa-download"></i> دریافت اطلاعات مخاطبان</button>
+            <div ui-content-for="navbarAction">
+                <a class="btn" ng-click="select_contacts()"><i class="fa fa-download"></i> دریافت اطلاعات مخاطبان</a>
+            </div>
+        </form>
+    </div>
+</div>

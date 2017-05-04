@@ -1,0 +1,32 @@
+<div class="scrollable" ui-shared-state="searchBar" ng-init="delete_status();select_groups()">
+    <div class="scrollable-content section">
+        <form role="form" ng-submit="send_sms_to_group(group_id,message)">
+            <fieldset>
+                <legend>ارسال پیامک</legend>
+                <div ng-if="insert_message_status" class="alert alert-success">
+                    ارسال شد.
+                </div>
+                <div class="form-group">
+                    <label>*گروه</label>
+                    <select class="form-control" ng-model="group_id"
+                            ng-options="item.id as item.name for item in groups" required></select>
+                </div>
+                <div class="form-group">
+                    <label>*پیامک</label>
+                    <textarea ng-model="message" class="form-control" rows="7"
+                              placeholder="متن پیامک"
+                              dir="rtl" required></textarea>
+                </div>
+            </fieldset>
+            <div class="alert alert-info">
+تعداد کاراکتر: {{message.length}}<br>
+                تعداد پیامک(فارسی):{{sms_counter(message.length)}}
+            </div>
+            <hr>
+            <button class="btn btn-primary btn-block">ارسال</button>
+            <div ui-content-for="navbarAction">
+                <a class="btn" ng-click="send_sms_to_group(group_id,message)">ارسال</a>
+            </div>
+        </form>
+    </div>
+</div>
