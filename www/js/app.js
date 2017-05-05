@@ -261,6 +261,7 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
                 $scope.group_users = [];
                 for (i = 0; i < results.rows.length; i++) {
                     $scope.send_sms(results.rows.item(i).phone, message);
+                    alert(results.rows.item(i).phone);
                 }
             });
             $scope.insert_message(group_id,message);
