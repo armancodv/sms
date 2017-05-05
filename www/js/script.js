@@ -19,6 +19,7 @@ app.config(function ($routeProvider) {
     $routeProvider.when('/add-group', {templateUrl: 'pages/add-group.html', reloadOnSearch: false});
     $routeProvider.when('/user/:user_id', {templateUrl: 'pages/user.html', reloadOnSearch: false});
     $routeProvider.when('/group/:group_id', {templateUrl: 'pages/group.html', reloadOnSearch: false});
+    $routeProvider.when('/messages/:group_id', {templateUrl: 'pages/messages.html', reloadOnSearch: false});
     $routeProvider.when('/backup', {templateUrl: 'pages/backup.html', reloadOnSearch: false});
     $routeProvider.when('/restore', {templateUrl: 'pages/restore.html', reloadOnSearch: false});
 });

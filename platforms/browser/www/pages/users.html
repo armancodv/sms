@@ -1,5 +1,6 @@
-<div ui-content-for="title" ng-init="select_users()">
-    <span>اعضا</span>
+<div ui-content-for="title" ng-init="select_users();select_groups()">
+    <span ng-if="!users_loading">اعضا</span>
+    <span ng-if="users_loading">لطفا صبر کنید</span>
 </div>
 
 <div class="scrollable" ui-shared-state="searchBar">
@@ -12,7 +13,7 @@
     <div class="scrollable-content">
         <div class="list-group">
             <div ng-repeat="item in users | filter:user_search">
-                <a href="#/user/{{ item.id }}" class="list-group-item"> {{ item.name }} </a>
+                <a href="#/user/{{ item.id }}" class="list-group-item"> {{ item.name }} <span> - گروه: {{ show_groups[item.group_id]}}</span></a>
             </div>
         </div>
     </div>

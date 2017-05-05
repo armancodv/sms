@@ -1,0 +1,13 @@
+<div ui-content-for="title" ng-init="select_group_messages_by_param()">
+    <span>پیام ها</span>
+</div>
+<div class="scrollable">
+    <div class="scrollable-content section">
+        <table class="table" dir="rtl">
+            <tr ng-repeat="item in group_messages">
+                <td>{{item.message}}</td>
+            </tr>
+        </table>
+        <a class="btn btn-primary btn-block" href="#/messages/{{group[0].id}}"><i class="fa fa-list-ul"></i> بازگشت</a>
+    </div>
+</div>

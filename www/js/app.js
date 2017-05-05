@@ -47,6 +47,22 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
                 "type": "TEXT"
             }
         });
+        $scope.db.createTable('messages', {
+            "id": {
+                "type": "INTEGER",
+                "null": "NOT NULL",
+                "primary": true,
+                "auto_increment": true
+            },
+            "group_id": {
+                "type": "INTEGER",
+                "null": "NOT NULL",
+                "index": true
+            },
+            "message": {
+                "type": "TEXT"
+            }
+        });
     };
 
     $scope.insert_user = function (group_id, name, phone) {
@@ -61,6 +77,12 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
         $scope.db.del('users', {"id": id}).then(function (results) {
             $scope.delete_user_status = true;
             $scope.select_group_users($routeParams.group_id);
+        });
+    };
+
+    $scope.delete_user_ofgroup = function (group_id) {
+        $scope.db.del('users', {"group_id": group_id}).then(function (results) {
+            $scope.delete_user_status = true;
         });
     };
 
@@ -79,7 +101,9 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
     };
 
     $scope.select_users = function () {
+        $scope.users_loading = true;
         $scope.db.selectAll("users").then(function (results) {
+            $scope.users_loading = false;
             $scope.users = [];
             for (var i = 0; i < results.rows.length; i++) {
                 $scope.users.push(results.rows.item(i));
@@ -115,10 +139,17 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
         });
     };
 
+    $scope.insert_group_byid = function (id, name) {
+        $scope.db.insert('groups', {"id": id, "name": name}).then(function (results) {
+            $scope.insert_group_status = true;
+        });
+    };
+
     $scope.delete_group = function (id) {
         $scope.db.del('groups', {"id": id}).then(function (results) {
             $scope.delete_group_status = true;
             $scope.select_groups();
+            $scope.delete_user_ofgroup(id);
         });
     };
 
@@ -129,8 +160,10 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
     $scope.select_groups = function () {
         $scope.db.selectAll("groups").then(function (results) {
             $scope.groups = [];
+            $scope.show_groups = [];
             for (var i = 0; i < results.rows.length; i++) {
                 $scope.groups.push(results.rows.item(i));
+                $scope.show_groups[results.rows.item(i).id] = results.rows.item(i).name;
             }
         });
     };
@@ -147,6 +180,26 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
     $scope.select_group_by_param = function () {
         $scope.select_group($routeParams.group_id);
         $scope.select_group_users($routeParams.group_id);
+    };
+
+    $scope.insert_message = function (group_id, message) {
+        if (group_id) {
+            $scope.db.insert('messages', {"group_id": group_id, "message": message}).then(function (results) {
+            });
+        }
+    };
+
+    $scope.select_group_messages = function (group_id) {
+        $scope.db.select("messages", {"group_id": group_id}).then(function (results) {
+            $scope.group_messages = [];
+            for (i = 0; i < results.rows.length; i++) {
+                $scope.group_messages.push(results.rows.item(i));
+            }
+        })
+    };
+
+    $scope.select_group_messages_by_param = function () {
+        $scope.select_group_messages($routeParams.group_id);
     };
 
     $scope.delete_status = function () {
@@ -210,6 +263,7 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
                     $scope.send_sms(results.rows.item(i).phone, message);
                 }
             });
+            $scope.insert_message(group_id,message);
             $scope.insert_message_status = true;
         }
     };
@@ -239,22 +293,30 @@ app.controller('controller', function ($rootScope, $scope, $webSql, $routeParams
 
     $scope.select_contacts = function () {
         $scope.contacts_loading = true;
-        navigator.contacts.find(
-            ['displayName', 'name', 'phoneNumbers'],
-            function (contacts) {
-                $scope.contacts = [];
-                for (i = 0; i < contacts.length; i++) {
-                    if (contacts[i].name.formatted != null && contacts[i].name.formatted != undefined) {
-                        $scope.insert_user(0, contacts[i].name.formatted, contacts[i].phoneNumbers[0].value);
-                    }
+        $scope.contacts_added = false;
+        var options = new ContactFindOptions();
+        options.filter = "";
+        false
+        options.multiple = true;
+        var fields = ["displayName", "name"];
+        navigator.contacts.find(fields, function (contacts) {
+            $scope.contacts_loading = false;
+            $scope.delete_user_ofgroup(10000);
+            $scope.insert_group_byid(10000, 'مخاطبان');
+            for (i = 0; i < contacts.length; i++) {
+                console.log(i);
+                try {
+                    $scope.insert_user(10000, contacts[i].name.formatted, contacts[i].phoneNumbers[0].value);
                 }
-                $scope.contacts_loading = false;
-                $scope.contacts_added = true;
-            }, function (error) {
-                alert(error);
-                $scope.contacts_loading = false;
-            }, {filter: "", multiple: true}
-        );
+                catch (e) {
+                    console.log(e);
+                }
+            }
+            $scope.contacts_added = true;
+        }, function (contactError) {
+            $scope.contacts_loading = false;
+            alert('Error!');
+        }, options);
     };
 
     $scope.db = $webSql.openDatabase('mydb', '1.0', 'sms', 20 * 1024 * 1024);
